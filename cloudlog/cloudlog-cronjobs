@@ -1,6 +1,9 @@
 # https://github.com/magicbug/Cloudlog/wiki/Recommended-Cron-Jobs
 # Missing a couple not applicable
 
+# Update Cloudlog
+@weekly ./workspace/update-cloudlog.sh &>/dev/null
+
 # Update LOTW Users Database
 @weekly curl --silent http://localhost/index.php/lotw/load_users &>/dev/null
 
