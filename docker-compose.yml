@@ -5,24 +5,10 @@ services:
     build:
       context: ./cloudlog
       dockerfile: Dockerfile
-    stop_signal: SIGKILL
-    volumes:
-      - cloudlog_data:/cloudlog
-    env_file:
-      - prod.env
-  web:
-    image: nginx:latest
     ports:
       - 8200:80
-    volumes:
-      - cloudlog_data:/cloudlog
-      - ./nginx:/etc/nginx/conf.d
-  php:
-    build:
-      context: ./php
-      dockerfile: Dockerfile
-    volumes:
-      - cloudlog_data:/cloudlog
+    env_file:
+      - prod.env
   db:
     image: mysql:latest
     volumes:
@@ -31,5 +17,4 @@ services:
       - prod.env
 
 volumes:
-  cloudlog_data:
   mysql_data:
