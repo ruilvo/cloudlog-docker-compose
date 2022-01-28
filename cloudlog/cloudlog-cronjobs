@@ -2,13 +2,13 @@
 # Missing a couple not applicable
 
 # Update LOTW Users Database
-@weekly curl --silent https://localhost/index.php/lotw/load_users &>/dev/null
+@weekly curl --silent http://localhost/index.php/lotw/load_users &>/dev/null
 
 # Update Clublog SCP Database File
-@weekly curl --silent https://localhost/index.php/update/update_clublog_scp &>/dev/null
+@weekly curl --silent http://localhost/index.php/update/update_clublog_scp &>/dev/null
 
 # Update DOK File for autocomplete
-@monthly curl --silent https://localhost/index.php/update/update_dok &>/dev/null
+@monthly curl --silent http://localhost/index.php/update/update_dok &>/dev/null
 
 # Update SOTA File for autocomplete
-@monthly curl --silent https://localhost/index.php/update/update_sota &>/dev/null
+@monthly curl --silent http://localhost/index.php/update/update_sota &>/dev/null
