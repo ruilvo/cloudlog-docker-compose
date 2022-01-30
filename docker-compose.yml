@@ -11,12 +11,14 @@ services:
       - 8200:80
     env_file:
       - prod.env
+    restart: always
   db:
     image: mysql:latest
     volumes:
       - mysql_data:/var/lib/mysql
     env_file:
       - prod.env
+    restart: always
 
 volumes:
   mysql_data:
