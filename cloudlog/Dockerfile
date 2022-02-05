@@ -25,7 +25,6 @@ COPY . .
 # Make scripts executable
 RUN chmod +x cloudlog_daily.sh
 RUN chmod +x cloudlog_hourly.sh
-RUN chmod +x cloudlog_weekly.sh
 RUN chmod +x run_cronjobs.sh
 # Get a file for the cronjob logs
 RUN touch cronjob_logs.txt

@@ -3,4 +3,3 @@
 
 0 0 * * * /workspace/cloudlog_daily.sh >> /workspace/cronjob_logs.txt 2>&1
 0 */1 * * * /workspace/cloudlog_hourly.sh >> /workspace/cronjob_logs.txt 2>&1
-@weekly /workspace/cloudlog_weekly.sh >> /workspace/cronjob_logs.txt 2>&1
