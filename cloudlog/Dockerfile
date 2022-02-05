@@ -34,19 +34,12 @@ RUN touch cronjob_logs.txt
 RUN git clone https://github.com/magicbug/Cloudlog.git /var/www/html
 
 # Fix permissions
-#  https://github.com/magicbug/Cloudlog/wiki/Installation#3-set-directory-ownership-and-permissions
-RUN chown -R root:www-data /var/www/html/application/config/
-RUN chmod -R g+rw /var/www/html/application/config/
-RUN chown -R root:www-data /var/www/html/assets/qslcard/
-RUN chmod -R g+rw /var/www/html/assets/qslcard/
-RUN chown -R root:www-data /var/www/html/backup/
-RUN chmod -R g+rw /var/www/html/backup/
-RUN chown -R root:www-data /var/www/html/updates/
-RUN chmod -R g+rw /var/www/html/updates/
-RUN chown -R root:www-data /var/www/html/uploads/
-RUN chmod -R g+rw /var/www/html/uploads/
-RUN chown -R root:www-data /var/www/html/images/eqsl_card_images/
-RUN chmod -R g+rw /var/www/html/images/eqsl_card_images/
+# This is possibly insecure but I couldn't be bothered to find a better way
+# The guide in:
+# https://github.com/magicbug/Cloudlog/wiki/Installation#3-set-directory-ownership-and-permissions
+# Made so that updating SOTA information and etc didn't work...
+RUN chown -R root:www-data /var/www/html
+RUN chmod -R g+rw /var/www/html
 # Plus make this executable
 RUN chmod +x /var/www/html/update_cloudlog.sh
 
