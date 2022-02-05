@@ -9,14 +9,33 @@ nano prod.env
 
 And edit the passwords.
 
-Pull up:
+Pull up the server:
 
 ```sh
-docker-compose -f "docker-compose.yml" up -d --build
+docker-compose -f "docker-compose.yaml" up -d --build
 ```
 
-Pull down:
+And then complete the installation as usual, by visiting
+`http://<your_host>/install`.
+
+Don't forget the after-installation account:
+
+```txt
+Demo User Account
+
+    Username: m0abc
+    Password: demo
+```
+
+To pull down the server:
 
 ```sh
-docker-compose -f "docker-compose.yml" down
+docker-compose -f "docker-compose.yaml" down
+```
+
+To clear/clean all Docker images, run:
+
+```sh
+docker system prune -a -f
+docker volume prune -f # **This _can_ lead to data loss**
 ```
