@@ -1,9 +1,0 @@
-{
-    "name": "Cloudlog",
-    "dockerComposeFile": [
-        "../docker-compose.yaml"
-    ],
-    "service": "cloudlog",
-    "shutdownAction": "none",
-    "workspaceFolder": "/workspace",
-}
