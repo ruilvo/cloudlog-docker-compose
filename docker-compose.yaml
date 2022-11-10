@@ -10,7 +10,7 @@ services:
     env_file:
       - prod.env
     ports:
-      - 9004:80
+      - 9005:80
     restart: always
   db:
     image: mysql:latest
