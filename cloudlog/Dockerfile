@@ -38,6 +38,7 @@ RUN git clone https://github.com/magicbug/Cloudlog.git /var/www/html
 
 # Fix permissions
 RUN ./initial_permissions.sh
+RUN chmod +x /var/www/html/update_cloudlog.sh
 
 # Add .htaccess file
 COPY .htaccess /var/www/html/.htaccess
