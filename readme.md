@@ -1,4 +1,4 @@
-# Cloudlog on docker-compose
+# Cloudlog on Docker
 
 Prepare the file:
 
@@ -12,7 +12,7 @@ And edit the passwords.
 Pull up the server:
 
 ```sh
-docker-compose -f "docker-compose.yaml" up -d --build
+docker compose up -d
 ```
 
 And then complete the installation as usual, by visiting
@@ -32,18 +32,11 @@ Demo User Account
 To pull down the server:
 
 ```sh
-docker-compose -f "docker-compose.yaml" down
-```
-
-To clear/clean all Docker images, run:
-
-```sh
-docker system prune -a -f
-docker volume prune -f # **This _can_ lead to data loss**
+docker compose down
 ```
 
 To gain terminal access:
 
 ```sh
-docker exec -it cloudlog-docker-cloudlog-1 /bin/bash
+docker compose exec cloudlog sh
 ```
