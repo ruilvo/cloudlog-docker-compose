@@ -39,6 +39,9 @@ RUN git clone https://github.com/magicbug/Cloudlog.git /var/www/html
 # Fix permissions
 RUN ./initial_permissions.sh
 
+# Add .htaccess file
+COPY .htaccess /var/www/html/.htaccess
+
 # Register the cronjobs
 COPY cloudlog-cronjobs /etc/cron.d/cloudlog-cronjobs
 RUN chmod 0644 /etc/cron.d/cloudlog-cronjobs
