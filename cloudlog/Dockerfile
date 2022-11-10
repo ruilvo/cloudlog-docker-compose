@@ -1,4 +1,7 @@
-FROM php:7.4-apache
+FROM php:7-apache
+
+# Use the default production configuration
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 # Update the apt package index
 RUN apt-get update
@@ -17,30 +20,24 @@ RUN docker-php-ext-install curl
 RUN docker-php-ext-install mbstring
 RUN docker-php-ext-install xml
 
+RUN docker-php-ext-enable mysqli
+RUN docker-php-ext-enable curl
+RUN docker-php-ext-enable mbstring
+RUN docker-php-ext-enable xml
+
 # Define a workspace
 WORKDIR /workspace
 
 # Get the files in
 COPY . .
 # Make scripts executable
-RUN chmod +x cloudlog_daily.sh
-RUN chmod +x cloudlog_hourly.sh
-RUN chmod +x run_cronjobs.sh
-# Get a file for the cronjob logs
-RUN touch cronjob_logs.txt
+RUN chmod +x initial_permissions.sh
 
 # Clone the repository directly into /var/www/html
 RUN git clone https://github.com/magicbug/Cloudlog.git /var/www/html
 
 # Fix permissions
-# This is possibly insecure but I couldn't be bothered to find a better way
-# The guide in:
-# https://github.com/magicbug/Cloudlog/wiki/Installation#3-set-directory-ownership-and-permissions
-# Made so that updating SOTA information and etc didn't work...
-RUN chown -R root:www-data /var/www/html
-RUN chmod -R g+rw /var/www/html
-# Plus make this executable
-RUN chmod +x /var/www/html/update_cloudlog.sh
+RUN ./initial_permissions.sh
 
 # Register the cronjobs
 COPY cloudlog-cronjobs /etc/cron.d/cloudlog-cronjobs

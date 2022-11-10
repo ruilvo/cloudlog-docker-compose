@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - cloudlog_data:/var/www/html
+    env_file:
+      - prod.env
     ports:
       - 9004:80
     restart: always

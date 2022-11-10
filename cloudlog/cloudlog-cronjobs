@@ -1,5 +1,29 @@
 # https://github.com/magicbug/Cloudlog/wiki/Recommended-Cron-Jobs
-# Missing a couple not applicable
+SHELL=/bin/bash
 
-0 0 * * * /workspace/cloudlog_daily.sh >> /workspace/cronjob_logs.txt 2>&1
-0 */1 * * * /workspace/cloudlog_hourly.sh >> /workspace/cronjob_logs.txt 2>&1
+# Update the Cloudlog installation every day at midnight
+0 0 * * * /bin/bash -c "/var/www/html/update_cloudlog.sh"
+
+# Upload QSOs to Club Log (ignore cron job if this integration is not required)
+# 0 */6 * * * curl --silent https://$CLOUDLOG_URL/index.php/clublog/upload/$CLUBLOG_USER> &>/dev/null
+
+# Upload QSOs to LoTW if certs have been provided every hour.
+0 */1 * * * curl --silent https://$CLOUDLOG_URL/index.php/lotw/lotw_upload &>/dev/null
+
+# Upload QSOs to QRZ Logbook (ignore cron job if this integration is not required)
+0 */6 * * * curl --silent https://$CLOUDLOG_URL/index.php/qrz/upload &>/dev/null
+
+# Update LOTW Users Database
+@weekly curl --silent https://$CLOUDLOG_URL/index.php/lotw/load_users &>/dev/null
+
+# Update Clublog SCP Database File
+@weekly curl --silent https://$CLOUDLOG_URL/index.php/update/update_clublog_scp &>/dev/null
+
+# Update DOK File for autocomplete
+@monthly curl --silent https://$CLOUDLOG_URL/index.php/update/update_dok &>/dev/null
+
+# Update SOTA File for autocomplete
+@monthly curl --silent https://$CLOUDLOG_URL/index.php/update/update_sota &>/dev/null
+
+# Update WWFF File for autocomplete
+@monthly curl --silent https://$CLOUDLOG_URL/index.php/update/update_wwff &>/dev/null
