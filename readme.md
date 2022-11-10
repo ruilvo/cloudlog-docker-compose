@@ -44,5 +44,5 @@ docker compose down
 To gain terminal access:
 
 ```sh
-docker compose exec cloudlog sh
+docker compose exec cloudlog bash
 ```
