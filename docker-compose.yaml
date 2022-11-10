@@ -6,11 +6,9 @@ services:
       context: ./cloudlog
       dockerfile: Dockerfile
     volumes:
-      - html_data:/var/www/html
+      - cloudlog_data:/var/www/html
     ports:
-      - 8200:80
-    env_file:
-      - prod.env
+      - 9004:80
     restart: always
   db:
     image: mysql:latest
@@ -21,5 +19,5 @@ services:
     restart: always
 
 volumes:
+  cloudlog_data:
   mysql_data:
-  html_data:
