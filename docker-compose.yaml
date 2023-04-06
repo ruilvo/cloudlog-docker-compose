@@ -14,6 +14,7 @@ services:
     restart: always
   db:
     image: mysql:latest
+    command: --max-allowed-packet=1073741824 --net_read_timeout=1000
     volumes:
       - mysql_data:/var/lib/mysql
     env_file:
