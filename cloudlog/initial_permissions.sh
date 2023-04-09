@@ -17,3 +17,7 @@ chmod -R g+rw /var/www/html/backup/
 chmod -R g+rw /var/www/html/updates/
 chmod -R g+rw /var/www/html/uploads/
 chmod -R g+rw /var/www/html/images/eqsl_card_images/
+
+# Update script executable 
+chmod +x /var/www/html/update_cloudlog.sh
+

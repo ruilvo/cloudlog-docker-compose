@@ -4,46 +4,40 @@ FROM php:7-apache
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 # Update the apt package index
-RUN apt-get update
-RUN apt-get upgrade -y
-
-# Install necessary packages
-RUN apt-get install git -y
-RUN apt-get install cron -y
-RUN apt-get install libcurl4-openssl-dev -y
-RUN apt-get install libonig-dev -y
-RUN apt-get install libxml2-dev -y
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+    cron \
+    git \
+    libcurl4-openssl-dev \
+    libonig-dev \
+    libxml2-dev \
+    nano \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install required packages for PHP
-RUN docker-php-ext-install mysqli
-RUN docker-php-ext-install curl
-RUN docker-php-ext-install mbstring
-RUN docker-php-ext-install xml
-
-RUN docker-php-ext-enable mysqli
-RUN docker-php-ext-enable curl
-RUN docker-php-ext-enable mbstring
-RUN docker-php-ext-enable xml
+RUN docker-php-ext-install \
+    mysqli \
+    curl \
+    mbstring \
+    xml
 
 # Define a workspace
-WORKDIR /workspace
-
-# Get the files in
-COPY . .
-# Make scripts executable
-RUN chmod +x initial_permissions.sh
+WORKDIR /var/www/html
 
 # Clone the repository directly into /var/www/html
-RUN git clone https://github.com/magicbug/Cloudlog.git /var/www/html
+RUN git clone https://github.com/magicbug/Cloudlog.git .
+
+# Add script and htaccess
+COPY initial_permissions.sh \
+     .htaccess \
+     ./
 
 # Fix permissions
-RUN ./initial_permissions.sh
-RUN chmod +x /var/www/html/update_cloudlog.sh
-
-# Add .htaccess file
-COPY .htaccess /var/www/html/.htaccess
+RUN chmod 0755 initial_permissions.sh && ./initial_permissions.sh
 
 # Register the cronjobs
 COPY cloudlog-cronjobs /etc/cron.d/cloudlog-cronjobs
-RUN chmod 0644 /etc/cron.d/cloudlog-cronjobs
-RUN crontab /etc/cron.d/cloudlog-cronjobs
+RUN chmod 0644 /etc/cron.d/cloudlog-cronjobs && crontab /etc/cron.d/cloudlog-cronjobs
+
+# Configure git
+RUN git config --global --add safe.directory /var/www/html && git config --global pull.ff only
+
